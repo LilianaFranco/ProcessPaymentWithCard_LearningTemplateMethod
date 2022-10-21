@@ -45,10 +45,10 @@ public class CreditCard extends Card{
 
     @Override
     protected void payAmount(Double amount) {
-        if ((amount< this.availableAmount) && (availableAmount+amount)<this.maxDebtAllowed){
+        if (amount < this.availableAmount){
             this.currentDebt = this.currentDebt + amount;
             this.availableAmount = this.availableAmount - amount;
-        } else{
+        } else {
             System.out.println("Su saldo es insuficiente. Intente con un valor menor");
         }
     }
