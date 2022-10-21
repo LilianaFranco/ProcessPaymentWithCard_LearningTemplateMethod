@@ -33,9 +33,8 @@ public class DebitCard extends Card{
             return this.balance;
         } else {
             Double impossiblePayment = this.balance - amount;
-            System.out.println("Non-sufficient funds. This amount exceed your limit in:" + impossiblePayment);
             System.out.println("Non-sufficient funds. Your are missing:" + impossiblePayment);
-            return this.balance;
+            return impossiblePayment;
         }
     }
 }
