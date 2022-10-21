@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Date;
 
 public abstract class Card {
@@ -5,11 +6,11 @@ public abstract class Card {
     //Properties
     int cardNumber;
     int cardVerificationValue;
-    Date cardExpirationDate;
+    LocalDate cardExpirationDate;
 
     //Constructor
 
-    public Card(int cardNumber, int cardVerificationValue, Date cardExpirationDate) {
+    public Card(int cardNumber, int cardVerificationValue, LocalDate cardExpirationDate) {
         this.cardNumber = cardNumber;
         this.cardVerificationValue = cardVerificationValue;
         this.cardExpirationDate = cardExpirationDate;
@@ -33,11 +34,11 @@ public abstract class Card {
         this.cardVerificationValue = cardVerificationValue;
     }
 
-    public Date getCardExpirationDate() {
+    public LocalDate getCardExpirationDate() {
         return cardExpirationDate;
     }
 
-    public void setCardExpirationDate(Date cardExpirationDate) {
+    public void setCardExpirationDate(LocalDate cardExpirationDate) {
         this.cardExpirationDate = cardExpirationDate;
     }
 
@@ -49,11 +50,18 @@ public abstract class Card {
     }
 
     protected boolean validateCardDate(){
-        Date today = new Date();
-        return this.cardExpirationDate.after(today);
+        LocalDate today = LocalDate.now();
+        if (this.cardExpirationDate.isAfter(today)){
+            System.out.println("Your card is valid");
+            return true;
+        } else {
+            System.out.println("Your card is expired");
+            return false;
+        }
+
     }
 
     //Methods
 
-    protected abstract void payAmount(Double amount);
+    protected abstract Double payAmount(Double amount);
 }

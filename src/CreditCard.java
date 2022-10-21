@@ -1,28 +1,29 @@
-import java.util.Date;
+import java.time.LocalDate;
 
 public class CreditCard extends Card{
 
     //Properties
-    Double maxDebtAllowed;
+    Double creditLimit;
     Double currentDebt;
-    Double availableAmount;
+    Double balance;
 
     //Constructor
-    public CreditCard(int cardNumber, int cardVerificationValue, Date cardExpirationDate, Double maxDebtAllowed, Double currentDebt, Double availableAmount) {
+
+    public CreditCard(int cardNumber, int cardVerificationValue, LocalDate cardExpirationDate, Double creditLimit, Double currentCredit) {
         super(cardNumber, cardVerificationValue, cardExpirationDate);
-        this.maxDebtAllowed = maxDebtAllowed;
-        this.currentDebt = currentDebt;
-        this.availableAmount = availableAmount;
+        this.creditLimit = creditLimit;
+        this.currentDebt = currentCredit;
+        this.balance = creditLimit - currentCredit;
     }
 
     //Setters and Getter
 
-    public Double getMaxDebtAllowed() {
-        return maxDebtAllowed;
+    public Double getCreditLimit() {
+        return creditLimit;
     }
 
-    public void setMaxDebtAllowed(Double maxDebtAllowed) {
-        this.maxDebtAllowed = maxDebtAllowed;
+    public void setCreditLimit(Double creditLimit) {
+        this.creditLimit = creditLimit;
     }
 
     public Double getCurrentDebt() {
@@ -33,23 +34,28 @@ public class CreditCard extends Card{
         this.currentDebt = currentDebt;
     }
 
-    public Double getAvailableAmount() {
-        return availableAmount;
+    public Double getBalance() {
+        return balance;
     }
 
-    public void setAvailableAmount(Double availableAmount) {
-        this.availableAmount = availableAmount;
+    public void setBalance(Double balance) {
+        this.balance = this.creditLimit - this.currentDebt;
     }
 
     //Methods
 
     @Override
-    protected void payAmount(Double amount) {
-        if (amount < this.availableAmount){
+    protected Double payAmount(Double amount) {
+        if(amount < this.balance){
             this.currentDebt = this.currentDebt + amount;
-            this.availableAmount = this.availableAmount - amount;
+            this.balance = this.balance - amount;
+            System.out.println("Payment done! Your balance is:" + this.balance);
+            return this.balance;
         } else {
-            System.out.println("Su saldo es insuficiente. Intente con un valor menor");
+            Double impossibleDebt = this.balance - amount;
+            System.out.println("Non-sufficient funds. This amount exceed your limit in:" + impossibleDebt);
+            return impossibleDebt;
+
         }
     }
 }
