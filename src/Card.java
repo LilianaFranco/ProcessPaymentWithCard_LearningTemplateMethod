@@ -43,9 +43,9 @@ public abstract class Card {
 
     //Methods
 
-    public void processPayment(){
+    public void processPayment(Double amount){
         validateCardDate();
-        payAmount();
+        payAmount(amount);
     }
 
     protected boolean validateCardDate(){
@@ -53,6 +53,7 @@ public abstract class Card {
         return this.cardExpirationDate.after(today);
     }
 
-    protected abstract void payAmount();
+    //Methods
 
+    protected abstract void payAmount(Double amount);
 }
